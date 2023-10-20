@@ -54,3 +54,9 @@ def home():
         category=categories,
         filter_category=filter_category
     )
+
+
+
+@app.route('/product_detail/<string:name>/<string:category>/<string:price>/<string:image>')
+def product_detail(name, category, price, image):
+    return render_template('product_detail.html', name=name, category=category, price=price, image=image)

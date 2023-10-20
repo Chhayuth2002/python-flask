@@ -1,4 +1,4 @@
-{% extends 'admin/layout.html' %} {% block title %}Student{% endblock %} {%
+{% extends 'admin/layout.html' %} {% block title %}Product{% endblock %} {%
 block main_conntent %}
 <!-- Main content -->
 <div class="content">
@@ -13,11 +13,11 @@ block main_conntent %}
                   <div class="col-6">
                     <h1 class="m-0" style="text-transform: uppercase">
                       <i class="fas fa-walking"></i>
-                      Add New Student
+                      Add New Category
                     </h1>
                   </div>
                   <div class="col-6">
-                    <a href="{{ url_for('student') }}">
+                    <a href="{{ url_for('category') }}">
                       <button
                         type="button"
                         class="btn btn-outline-secondary float-right"
@@ -31,49 +31,27 @@ block main_conntent %}
             </div>
           </div>
           <div class="card-body">
-            <form action="{{ url_for('add_student') }}" method="POST">
+            <form action="{{ url_for('add_category') }}" method="POST">
               {#--Name--#}
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">Name</span>
+                  <span class="input-group-text">Category Name</span>
                 </div>
                 <input
                   type="text"
                   class="form-control"
                   required
-                  autocomplete="off"
-                  name="name"
+                  name="category_name"
                 />
               </div>
-              {#--Gender--#}
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">Gender</span>
+                  <span class="input-group-text">Status</span>
                 </div>
-                <select class="form-control" name="gender">
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
+                <select class="form-control" name="status">
+                  <option value="True">True</option>
+                  <option value="False">False</option>
                 </select>
-              </div>
-              {#--address--#}
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Address</span>
-                </div>
-                <input
-                  type="text"
-                  class="form-control"
-                  required
-                  autocomplete="off"
-                  name="address"
-                />
-              </div>
-              {#--phone--#}
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Phone Number</span>
-                </div>
-                <input type="text" class="form-control" name="phone" />
               </div>
 
               <input type="reset" class="btn btn-danger" value="Reset" />

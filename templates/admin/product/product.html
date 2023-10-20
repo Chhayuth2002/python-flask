@@ -1,0 +1,98 @@
+{% extends 'admin/layout.html' %} {% block title %}Student{% endblock %} {%
+block main_conntent %}
+<!-- Main content -->
+
+<div class="content">
+  <div class="container-fluid">
+    <div class="row mt-3">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-6">
+                    <h1 class="m-0" style="text-transform: uppercase">
+                      <i class="fas fa-walking"></i>
+                      Product List
+                    </h1>
+                  </div>
+                  <div class="col-6">
+                    <a href="{{ url_for('addProductIndex') }}">
+                      <button
+                        type="button"
+                        class="btn btn-outline-success float-right"
+                      >
+                        Add New <i class="fas fa-plus-circle"></i>
+                      </button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm table-borderless table-striped">
+                <thead>
+                  <tr class="bg-secondary">
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Cost</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in rows %}
+                  <tr>
+                    <td>
+                      <img
+                        src="/static/image/sting.jpeg"
+                        class="rounded float-left"
+                        alt=""
+                        style="width: 50px; width: 50px"
+                      />
+                    </td>
+                    <td>{{ item.product_name }}</td>
+                    <td>{{ item.category_name }}</td>
+                    <td>{{ item.cost }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.status }}</td>
+                    <td style="width: 190px">
+                      <a href="/admin/edit_product_index/{{ item.product_id }}">
+                        <button type="button" class="btn btn-outline-warning">
+                          <i class="far fa-edit"></i>
+                          Edit
+                        </button>
+                      </a>
+                      <form
+                        style="float: right"
+                        method="post"
+                        action="{{ url_for('delete_product') }}"
+                      >
+                        <input
+                          type="hidden"
+                          value="{{ item.product_id }}"
+                          name="product_id"
+                        />
+                        <button type="submit" class="btn btn-outline-danger">
+                          <i class="far fa-trash-alt"></i>
+                          Delete
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

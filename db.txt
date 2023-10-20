@@ -1,0 +1,83 @@
+# conn = sql.connect('ss34.db')
+# conn.execute(
+#     'CREATE TABLE if not exists students (name TEXT, addr TEXT, city TEXT, pin TEXT)')
+
+# conn.execute('''
+#     CREATE TABLE IF NOT EXISTS category (
+#         category_id INTEGER PRIMARY KEY,
+#         category_name TEXT,
+#         status TEXT
+#     );
+# ''')
+
+# conn.execute('''
+#     CREATE TABLE IF NOT EXISTS product (
+#         product_id INTEGER PRIMARY KEY,
+#         product_name TEXT,
+#         price REAL,
+#         cost REAL,
+#         image TEXT,
+#         status TEXT,
+#         category_id INTEGER,
+#         FOREIGN KEY (category_id) REFERENCES category(category_id)
+#     );
+# ''')
+
+# conn.execute('''
+#     CREATE TABLE IF NOT EXISTS currency (
+#         id INTEGER PRIMARY KEY,
+#         code TEXT,
+#         symbol TEXT,
+#         is_default INTEGER,
+#         sell_out_price REAL
+#     );
+# ''')
+
+# conn.execute('''
+#     CREATE TABLE IF NOT EXISTS user (
+#         id INTEGER PRIMARY KEY,
+#         name TEXT,
+#         image TEXT,
+#         status TEXT
+#     );
+# ''')
+
+# conn.execute('''
+#     CREATE TABLE IF NOT EXISTS customer (
+#         id INTEGER PRIMARY KEY,
+#         name TEXT,
+#         image TEXT,
+#         status TEXT
+#     );
+# ''')
+
+# conn.execute('''
+#     CREATE TABLE IF NOT EXISTS order_table (
+#         order_id INTEGER PRIMARY KEY,
+#         order_date DATE
+#     );
+# ''')
+
+# conn.execute('''
+#     CREATE TABLE IF NOT EXISTS order_detail (
+#         order_detail_id INTEGER PRIMARY KEY,
+#         order_id INTEGER,
+#         product_id INTEGER,
+#         quantity INTEGER,
+#         FOREIGN KEY (order_id) REFERENCES order_table(order_id),
+#         FOREIGN KEY (product_id) REFERENCES product(product_id)
+#     );
+# ''')
+
+# conn.execute('''
+#     CREATE TABLE IF NOT EXISTS payment (
+#         payment_id INTEGER PRIMARY KEY,
+#         order_id INTEGER,
+#         discount REAL,
+#         amount REAL,
+#         payment_date DATE,
+#         FOREIGN KEY (order_id) REFERENCES order_table(order_id)
+#     );
+# ''')
+
+# conn.close()

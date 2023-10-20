@@ -1,6 +1,7 @@
-{% extends 'admin/layout.html' %} {% block title %}Student{% endblock %} {%
+{% extends 'admin/layout.html' %} {% block title %}User{% endblock %} {%
 block main_conntent %}
 <!-- Main content -->
+<br />
 <div class="content">
   <div class="container-fluid">
     <div class="row mt-3">
@@ -13,11 +14,11 @@ block main_conntent %}
                   <div class="col-6">
                     <h1 class="m-0" style="text-transform: uppercase">
                       <i class="fas fa-walking"></i>
-                      Add New Student
+                      Update User
                     </h1>
                   </div>
                   <div class="col-6">
-                    <a href="{{ url_for('student') }}">
+                    <a href="{{ url_for('user') }}">
                       <button
                         type="button"
                         class="btn btn-outline-secondary float-right"
@@ -31,56 +32,40 @@ block main_conntent %}
             </div>
           </div>
           <div class="card-body">
-            <form action="{{ url_for('add_student') }}" method="POST">
+            <form action="{{ url_for('edit_user') }}" method="POST">
               {#--Name--#}
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">Name</span>
                 </div>
+                <input type="hidden" value="{{ row[0].id }}" name="id">
                 <input
+                  readonly
                   type="text"
                   class="form-control"
                   required
                   autocomplete="off"
                   name="name"
+                  value="{{ row[0].name }}"
                 />
               </div>
               {#--Gender--#}
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">Gender</span>
+                  <span class="input-group-text">Status</span>
                 </div>
-                <select class="form-control" name="gender">
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
+                <select class="form-control" name="status">
+                  <option value="True" {% if row[0].status == 'True' %}selected{% endif %}>True</option>
+                  <option value="False" {% if row[0].status == 'False' %}selected{% endif %}>False</option>
                 </select>
               </div>
-              {#--address--#}
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Address</span>
-                </div>
-                <input
-                  type="text"
-                  class="form-control"
-                  required
-                  autocomplete="off"
-                  name="address"
-                />
-              </div>
-              {#--phone--#}
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Phone Number</span>
-                </div>
-                <input type="text" class="form-control" name="phone" />
-              </div>
+              
 
               <input type="reset" class="btn btn-danger" value="Reset" />
               <input
                 type="submit"
                 class="btn btn-primary float-right"
-                value="Save"
+                value="Update"
               />
             </form>
           </div>
