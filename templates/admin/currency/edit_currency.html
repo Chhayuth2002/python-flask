@@ -37,14 +37,14 @@ block main_conntent %}
                 <div class="input-group-prepend">
                   <span class="input-group-text">Name</span>
                 </div>
-                <input type="hidden" value="{{ row[0].id }}" name="id">
+                <input type="hidden" value="{{ rows[0].id }}" name="id">
                 <input
                   type="text"
                   class="form-control"
                   required
                   autocomplete="off"
                   name="code"
-                  value="{{ row[0].code }}"
+                  value="{{ rows[0].code }}"
                 />
               </div>
               <div class="input-group mb-3">
@@ -57,7 +57,7 @@ block main_conntent %}
                   required
                   autocomplete="off"
                   name="symbol"
-                  value="{{ row[0].symbol }}"
+                  value="{{ rows[0].symbol }}"
                 />
               </div>
 
@@ -66,8 +66,8 @@ block main_conntent %}
                   <span class="input-group-text">Is Default</span>
                 </div>
                 <select class="form-control" name="is_default">
-                  <option value="True" {% if row[0].is_default == 'True' %}selected{% endif %}>True</option>
-                  <option value="False" {% if row[0].is_default == 'False' %}selected{% endif %}>False</option>
+                  <option value="True" {% if rows[0].is_default == 'True' %}selected{% endif %}>True</option>
+                  <option value="False" {% if rows[0].is_default == 'False' %}selected{% endif %}>False</option>
                 </select>
               </div>
               <div class="input-group mb-3">
@@ -80,7 +80,7 @@ block main_conntent %}
                   required
                   autocomplete="off"
                   name="sell_out_price"
-                  value="{{ row[0].sell_out_price }}"
+                  value="{{ rows[0].sell_out_price }}"
                 />
               </div>
               <input type="reset" class="btn btn-danger" value="Reset" />

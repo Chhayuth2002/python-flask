@@ -1,17 +1,13 @@
-from flask import Flask, render_template, request, redirect
-import mysql.connector
+from flask import Flask, render_template, request, redirect,jsonify
+from sqlalchemy import create_engine, text
 
 app = Flask(__name__)
 
 
-db = mysql.connector.connect(host='localhost',
-                             user='root',
-                             passwd='',
-                             db='flask',
-                             port=3306)
-
-cur = db.cursor(dictionary=True)
-
+# Connect to the database
+engine = create_engine("mysql+mysqlconnector://flask:root@localhost/flask")
+# Test the connection
+cur = engine.connect()
 
 import routes
 

@@ -1,82 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include 'head/head.html' %}
-<body>
-
-{#slide show#}
-<div class="container">
-    <div class="row mt-1 p-1"
-         style="border-radius: 5px;
-                position: sticky; top: 0; z-index: 100; background-color: whitesmoke"
-    >
-        <a href="{{ url_for('home') }}?filter_category=all">
-            <button
-                    class="btn btn-outline-primary ml-1 mr-1 {% if filter_category == 'all' %} active {% endif %}"
-                    type="submit"
-                    style="text-transform: uppercase"
-            >
-                all
-            </button>
+  {% include 'head/head.html' %}
+  <body>
+    {#slide show#}
+    <div class="container" id="app">
+      <div
+        class="row mt-1 p-1"
+        style="
+          border-radius: 5px;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          background-color: whitesmoke;
+        "
+      >
+        <a @click="updateFilter('all')">
+          <button
+            class="btn btn-outline-primary ml-1 mr-1"
+            :class="{ 'active': filterCategory === 'all' }"
+            style="text-transform: uppercase"
+          >
+            all
+          </button>
         </a>
-    
-        {% for item in category %}
-            <a href="{{ url_for('home') }}?filter_category={{ item.name }}">
-                <button
-                        class="btn btn-outline-primary ml-1 mr-1 {% if filter_category ==  item.name %} active {% endif %}"
-                        type="submit"
-                        style="text-transform: uppercase"
-                >
-                    {{ loop.index }}. {{ item.name }}
-                </button>
-            </a>
-        {% endfor %}
 
-    </div>
-    {# prouct #}
-    <div class="row mt-1">
-        {% for item in products %}
-            <div class="col-lg-3 col-md-2 col-sm-3 col-3 mb-3 mt-3">
-                <div class="card">
-                    <div class="image-container">
-                        <div class="first">
-                            <div class="d-flex justify-content-between align-items-end">
-                                <span class="discount bg-success">{{ item.category_name }}</span>
-                                <span class="wishlist"><i class="fa fa-heart-o"></i></span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="discount mt-1">-{{ item.discount }}%</span>
-                            </div>
-                        </div>
-                        <a href="/product_detail/{{ item.name }}/{{ item.category_name }}/{{ item.price }}/{{ 'sting.jpeg' }}"
-                           target="_self">
-                            <img src="/static/image/sting.jpeg" class="img-fluid rounded thumbnail-image">
-                        </a>
-                    </div>
-                    <div class="product-detail-container p-2">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="dress-name">{{ item.name }}</h5>
-                            <div class="d-flex flex-column mb-2">
-                        <span class="new-price text-dark">
-                            {{ "${:.3f}".format(item.price - (item.discount / 100 * item.price)) }}
-                        </span>
-                                <del class="old-price text-right"
-                                     style="font-size: 12px; background-color: yellow; color: firebrick"
-                                >
-                                    {{ "${:.2f}".format(item.price) }}
-                                </del>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center pt-1">
-                            <div><i class="fa fa-star-o rating-star"></i> <span class="rating-number">4.8</span>
-                            </div>
-                            <span class="buy">BUY +</span>
-                        </div>
-                    </div>
+        <a
+          v-for="item in this.categories"
+          :key="item.id"
+          @click="updateFilter(item.name)"
+          -
+        >
+          <button
+            class="btn btn-outline-primary ml-1 mr-1"
+            :class="{ 'active': filterCategory === item.name }"
+            style="text-transform: uppercase"
+          >
+            [[ item.name ]]
+          </button>
+        </a>
+      </div>
+      {# prouct #}
+      <div class="row mt-1">
+        <div
+          v-for="item in filteredProducts"
+          class="col-lg-3 col-md-2 col-sm-3 col-3 mb-3 mt-3"
+        >
+          <div class="card">
+            <div class="image-container">
+              <div class="first">
+                <div class="d-flex justify-content-between align-items-end">
+                  <span class="discount bg-success"
+                    >[[ item.category_name ]]</span
+                  >
+                  <span class="wishlist"><i class="fa fa-heart-o"></i></span>
                 </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="discount mt-1">-[[ item.discount ]]%</span>
+                </div>
+              </div>
+              <a href="#">
+                <img
+                  src="/static/image/sting.jpeg"
+                  class="img-fluid rounded thumbnail-image"
+                />
+              </a>
             </div>
-        {% endfor %}
+            <div class="product-detail-container p-2">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="dress-name">[[ item.name ]]</h5>
+                <div class="d-flex flex-column mb-2">
+                  <div class="d-flex flex-column mb-2">
+                    <span class="new-price text-dark">[[ item.price ]]$</span>
+                    <del
+                      class="old-price text-right"
+                      style="
+                        font-size: 12px;
+                        background-color: yellow;
+                        color: firebrick;
+                      "
+                    >
+                      [[ item.price - (item.discount / 100 * item.price) ]]
+                    </del>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center pt-1"
+                  >
+                    <div>
+                      <i class="fa fa-star-o rating-star"></i>
+                      <span class="rating-number">4.8</span>
+                    </div>
+                    <span class="buy">BUY +</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-</div>
-</body>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        delimiters: ["[[", "]]"],
+        data: {
+          filterCategory: "all", // Initial value from Flask
+          categories: [],
+          products: [],
+        },
+        computed: {
+          filteredProducts() {
+            if (this.filterCategory === "all") {
+              return this.products;
+            } else {
+              return this.products.filter(
+                (product) => product.category_name === this.filterCategory
+              );
+            }
+          },
+        },
+        mounted() {
+          $.LoadingOverlay("show");
+          axios.get("http://127.0.0.1:5000/getAllProduct").then((response) => {
+            this.products = response.data;
+            $.LoadingOverlay("hide");
+          });
+          $.LoadingOverlay("show");
+          axios.get("http://127.0.0.1:5000/getAllCategory").then((response) => {
+            this.categories = response.data;
+            $.LoadingOverlay("hide");
+          });
+        },
+        methods: {
+          updateFilter(category) {
+            this.filterCategory = category;
+          },
+        },
+      });
+    </script>
+  </body>
 </html>

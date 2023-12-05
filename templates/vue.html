@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/static/css/product_card.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+
+  <body>
+    <!-- <div id="app">
+      <center>
+        <div
+          :class="'m-5 rounded-circle ' + color"
+          style="width: 200px; height: 200px"
+        ></div>
+        <button class="btn btn-danger" @click="toggleColorCycle">
+          Start / Stop
+        </button>
+      </center>
+    </div>
+    <script>
+      var vue_obj = new Vue({
+        el: "#app",
+        delimiters: ["{[", "]}"],
+        data: {
+          color: "bg-primary",
+          colors: ["bg-danger", "bg-primary", "bg-secondary", "bg-warning"],
+          isLooping: false,
+          interval: null,
+        },
+        methods: {
+          toggleColorCycle() {
+            if (this.isLooping) {
+              clearInterval(this.interval);
+            } else {
+              this.startColorCycle();
+            }
+            this.isLooping = !this.isLooping;
+          },
+          startColorCycle() {
+            let currentIndex = 0;
+            this.interval = setInterval(() => {
+              this.color = this.colors[currentIndex];
+              currentIndex = (currentIndex + 1) % this.colors.length;
+            }, 300);
+          },
+        },
+      });
+    </script> -->
+    <div id="app">
+      {#slide show#}
+      <nav class="main-header navbar navbar-expand-md bg-info p-0 m-0">
+        <div class="container-fluid p-0 m-0">
+          <a href="https://clinic.phama-tech.com/admin" class="navbar-brand">
+            <img
+              src="https://scontent.fpnh10-1.fna.fbcdn.net/v/t39.30808-6/307976598_520814633382547_5851821056149434871_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=H1qB83D9Ip0AX-rd_E-&_nc_ht=scontent.fpnh10-1.fna&oh=00_AfDzRKs7NW3PQ_YlMWV5gZaDzROg3Gz8a6yzY3c8ZS-5pg&oe=64E8F83B"
+              style="width: 50px; height: 50px; border-radius: 50%"
+            />
+          </a>
+          <marquee>
+            <span
+              class="brand-text font-weight-light"
+              style="font-family: Moul; font-size: 20px; color: white"
+            >
+              បន្ទប់ពិគ្រោះ និង ព្យាបាលជំងឺ
+            </span>
+            <span
+              class="brand-text font-weight-light"
+              style="font-size: 15px; color: white"
+            >
+              : ពិនិត្យជំងឺទូទៅ មនុស្សចាស់ កុមារ រោគស្ត្រី និង វះកាត់តូច
+              មានទទួលពិនិត្យ អេកូរពណ៍ ចាក់វ៉ាក់សាំងមហារីកស្បូន ថ្លើមបេ តេតាណុស
+              ឆ្កែខាំ
+            </span>
+          </marquee>
+        </div>
+      </nav>
+      <div class="container-fluid">
+        <div class="row">
+          {#product_card#}
+          <div class="col-7">
+            {# category #}
+            <div class="row" style="position: sticky; top: 0; z-index: 100">
+              <div
+                class="col-12 p-1 bg-white"
+                style="box-shadow: 1px 9px 25px -11px gray"
+              >
+                {% for category in categories %}
+                <button
+                  type="button"
+                  class="btn btn-outline-info"
+                  style="text-transform: uppercase"
+                >
+                  {{ category.name }}
+                </button>
+                {% endfor %}
+              </div>
+            </div>
+
+            [[this.product_list]]
+            <div class="row mt-1">
+              <!-- {% for item in product_list %} -->
+              <div
+                v-for="item in this.product_list"
+                class="col-lg-3 col-mds-2 col-sm-3 col-3 mb-3 mt-3"
+              >
+                <div class="card">
+                  <div class="image-container">
+                    <div class="first">
+                      <div
+                        class="d-flex justify-content-between align-items-end"
+                      >
+                        <span class="discount bg-success"
+                          >[[ item.category_name ]]</span
+                        >
+                        <span class="wishlist"
+                          ><i class="fa fa-heart-o"></i
+                        ></span>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span class="discount mt-1">-[[ item.discount ]]%</span>
+                      </div>
+                    </div>
+                    <img
+                      src="/static/image/sting.jpeg"
+                      class="img-fluid rounded thumbnail-image"
+                    />
+                  </div>
+                  <div class="product-detail-container p-2">
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <h5 class="dress-name">{{ item.name }}</h5>
+                      <!-- <div class="d-flex flex-column mb-2">
+                      <span class="new-price text-dark">
+                        {{ "${:.3f}".format(item.price - (item.discount / 100 *
+                        item.price)) }}
+                      </span>
+                      <del
+                        class="old-price text-right"
+                        style="
+                          font-size: 12px;
+                          background-color: yellow;
+                          color: firebrick;
+                        "
+                      >
+                        {{ "${:.2f}".format(item.price) }}
+                      </del>
+                    </div> -->
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center pt-1"
+                    >
+                      <div>
+                        <i class="fa fa-star-o rating-star"></i>
+                        <span class="rating-number">4.8</span>
+                      </div>
+                      <span class="buy">BUY +</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- {% endfor %} -->
+            </div>
+          </div>
+
+          {#sale_list#}
+          <div class="col-5 p-0 m-0">
+            <table class="table table-striped table-borderless">
+              <thead>
+                <tr class="bg-secondary text-white">
+                  <th>ល.រ</th>
+                  <th>ការពិពណ៌នា</th>
+                  <th>ចំនួន</th>
+                  <th>តម្លៃលក់($)</th>
+                  <th>បញ្ខុះតម្លៃ(%)</th>
+                  <th>សរុប($)</th>
+                  <th>សកម្មភាព</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in range(10) %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>Coca</td>
+                  <td>2</td>
+                  <td>0.50 $</td>
+                  <td>0.0 %</td>
+                  <td>1.0 $</td>
+                  <td>
+                    <a href="#" class="text-danger">លុប</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var vue_obj = new Vue({
+        el: "#app",
+        delimiters: ["[[", "]]"],
+        data: { product_list: [], msg: "hello" },
+        methods: {},
+        mounted() {
+          axios
+            .get("http://127.0.0.1:5000/api/getAllProduct")
+            .then((response) => {
+              console.log("Axios success");
+              this.product_list = response.data;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -250,10 +250,7 @@
                   class="nav-link {% if request.endpoint == 'admin' %}active{% endif %}"
                 >
                   <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    Dashboard
-                    <span class="right badge badge-danger">100</span>
-                  </p>
+                  <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -262,72 +259,35 @@
                   class="nav-link {% if request.endpoint == 'student' %}active{% endif %}"
                 >
                   <i class="nav-icon fas fa-graduation-cap"></i>
-                  <p>
-                    Students
-                    <span class="right badge badge-danger">100</span>
-                  </p>
+                  <p>Students</p>
                 </a>
               </li>
-
               <li
-                class="nav-item {% if request.endpoint in ['product', 'category', 'customer', 'user', 'currency'] %}menu-open{% endif %}"
+                class="nav-item {% if request.endpoint in ['product', 'category', 'customer', 'user', 'currency', 'addProductIndex', 'editProductIndex', 'addCategoryIndex', 'editCategoryIndex', 'addCustomerIndex', 'editCustomerIndex', 'addUserIndex', 'editUserIndex', 'addCurrencyIndex', 'editCurrencyIndex'] %}menu-open{% endif %}"
               >
                 <a
                   href="#"
-                  class="nav-link {% if request.endpoint in ['product', 'category', 'customer', 'user', 'currency'] %}active{% endif %}"
+                  class="nav-link {% if request.endpoint in ['product', 'category', 'customer', 'user', 'currency', 'addProductIndex', 'editProductIndex', 'addCategoryIndex', 'editCategoryIndex', 'addCustomerIndex', 'editCustomerIndex', 'addUserIndex', 'editUserIndex', 'addCurrencyIndex', 'editCurrencyIndex'] %}active{% endif %}"
                 >
                   <i class="nav-icon fas fas fa-layer-group"></i>
-                  <p>
-                    Starter Pages
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
+                  <p>Starter Pages <i class="right fas fa-angle-left"></i></p>
                 </a>
                 <ul class="nav nav-treeview">
+                  {% set menu_items = [ {'endpoint': 'product', 'text':
+                  'Product'}, {'endpoint': 'category', 'text': 'Category'},
+                  {'endpoint': 'customer', 'text': 'Customer'},
+                  {'endpoint':'user', 'text': 'User'}, {'endpoint': 'currency',
+                  'text':'Currency'} ] %} {% for item in menu_items %}
                   <li class="nav-item">
                     <a
-                      href="{{ url_for('product') }}"
-                      class="nav-link {% if 'product' in request.endpoint %}active{% endif %}"
+                      href="{{ url_for(item.endpoint) }}"
+                      class="nav-link {% if item.endpoint in request.endpoint %}active{% endif %}"
                     >
                       <i class="far fa-circle nav-icon"></i>
-                      <p>Product</p>
+                      <p>{{ item.text }}</p>
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a
-                      href="{{ url_for('category') }}"
-                      class="nav-link {% if 'category' in request.endpoint %}active{% endif %}"
-                    >
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Category</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      href="{{ url_for('customer') }}"
-                      class="nav-link {% if 'customer' in request.endpoint %}active{% endif %}"
-                    >
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Customer</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      href="{{ url_for('user') }}"
-                      class="nav-link {% if 'user' in request.endpoint %}active{% endif %}"
-                    >
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>User</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      href="{{ url_for('currency') }}"
-                      class="nav-link {% if 'currency' in request.endpoint %}active{% endif %}"
-                    >
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Currency</p>
-                    </a>
-                  </li>
+                  {% endfor %}
                 </ul>
               </li>
             </ul>
