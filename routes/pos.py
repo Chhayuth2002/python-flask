@@ -1,4 +1,4 @@
-from app import app, render_template, cur, jsonify, text
+from app import app, render_template, jsonify, text, engine
 
 
 @app.route('/pos')
@@ -9,31 +9,51 @@ def pos_index():
 
 @app.route('/getAllCategory')
 def getAllCategory():
-    categories = cur.execute(text('SELECT * from category;'))
-    cur.commit()
+    try:
+        con = engine.connect()
 
-    json_string = [{'id': category.category_id, 'name': category.category_name} for category in categories]
-    
-    return json_string
+        categories = con.execute(text('SELECT * from category;'))
+        con.commit()
+
+        json_string = [{'id': category.category_id, 'name': category.category_name} for category in categories]
+        
+        return json_string
+    finally:
+        con.close()
+        
 
 @app.route('/getAllProduct')
 def getAllProduct():
-    products = cur.execute(text('SELECT product.*, category.* FROM product JOIN category ON product.category_id = category.category_id ;'))
-    cur.commit()
-    
-    json_string = []
-    for product in products:
-        json_string.append(
-            {
-                'id': product.product_id,
-                'name': product.product_name,
-                'discount': product.discount,
-                'price': product.price,
-                'image': product.image,
-                'category_name':product.category_name,
-                'category_id':product.category_id,
-            }
-        )
+    try:
+        con = engine.connect()
+        
+        products = con.execute(text('SELECT product.*, category.* FROM product JOIN category ON product.category_id = category.category_id ;'))
+        categories = con.execute(text('SELECT * from category;'))
+        con.commit()
+        category_list = [{'id': category.category_id, 'name': category.category_name} for category in categories]
+        
+        product_list = []
+        for product in products:
+            product_list.append(
+                {
+                    'id': product.product_id,
+                    'name': product.product_name,
+                    'discount': product.discount,
+                    'price': product.price,
+                    'image': product.image,
+                    'category_name':product.category_name,
+                    'category_id':product.category_id,
+                }
+            )
 
-    return json_string
+        result = [
+            product_list,
+            category_list
+        ]
+        
+        return result
+    
+    finally:
+        con.close()
+
 

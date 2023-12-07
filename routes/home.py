@@ -1,4 +1,4 @@
-from  app import app, render_template, request, cur, text
+from  app import app, render_template, request, text
 
 @app.route('/')
 @app.route('/home')

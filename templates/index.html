@@ -25,24 +25,23 @@
         </a>
 
         <a
-          v-for="item in this.categories"
+          v-for="item in categories"
           :key="item.id"
           @click="updateFilter(item.name)"
-          -
         >
           <button
             class="btn btn-outline-primary ml-1 mr-1"
             :class="{ 'active': filterCategory === item.name }"
             style="text-transform: uppercase"
           >
-            [[ item.name ]]
+            [[item.name]]
           </button>
         </a>
       </div>
       {# prouct #}
       <div class="row mt-1">
         <div
-          v-for="item in filteredProducts"
+          v-for="item in this.filteredProducts"
           class="col-lg-3 col-md-2 col-sm-3 col-3 mb-3 mt-3"
         >
           <div class="card">
@@ -106,6 +105,7 @@
           filterCategory: "all", // Initial value from Flask
           categories: [],
           products: [],
+          responeData: [],
         },
         computed: {
           filteredProducts() {
@@ -121,12 +121,8 @@
         mounted() {
           $.LoadingOverlay("show");
           axios.get("http://127.0.0.1:5000/getAllProduct").then((response) => {
-            this.products = response.data;
-            $.LoadingOverlay("hide");
-          });
-          $.LoadingOverlay("show");
-          axios.get("http://127.0.0.1:5000/getAllCategory").then((response) => {
-            this.categories = response.data;
+            this.products = response.data[0];
+            this.categories = response.data[1];
             $.LoadingOverlay("hide");
           });
         },

@@ -7,7 +7,7 @@ app = Flask(__name__)
 # Connect to the database
 engine = create_engine("mysql+mysqlconnector://flask:root@localhost/flask")
 # Test the connection
-cur = engine.connect()
+# cur = engine.connect()
 
 import routes
 
